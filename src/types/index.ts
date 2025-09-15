@@ -24,3 +24,7 @@ export interface IHotel extends Schema {
   propertyType: string;
   isCancelable: boolean;
 }
+
+export interface ICategory extends Schema {
+  category: string;
+}

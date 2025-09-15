@@ -1,7 +1,8 @@
 import express from "express";
 import healthRoute from "./routes/health.route.js";
-import hotelsRouter from "./routes/hotel.route.js";
+import hotelsRoutes from "./routes/hotel.route.js";
 import routeToAddHotelsInDb from "./routes/hotelImport.route.js";
+import categoriesRoutes from "./routes/category.route.js";
 import mongoose from "mongoose";
 import { connectDB } from "./configs/dbconfig.js";
 
@@ -12,7 +13,8 @@ connectDB();
 app.use(express.json());
 app.use("/api", healthRoute);
 app.use("/api/add-hotels", routeToAddHotelsInDb);
-app.use("/api/hotels", hotelsRouter);
+app.use("/api/hotels", hotelsRoutes);
+app.use("/api/categories", categoriesRoutes);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to Database!");
