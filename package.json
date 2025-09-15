@@ -1,0 +1,36 @@
+{
+  "name": "breezetravel_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --loader ts-node/esm src/server.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Siddharth9101/breezetravel_backend.git"
+  },
+  "keywords": [],
+  "author": "Siddharth Saxena",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Siddharth9101/breezetravel_backend/issues"
+  },
+  "homepage": "https://github.com/Siddharth9101/breezetravel_backend#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.1",
+    "uuid": "^13.0.0"
+  }
+}
