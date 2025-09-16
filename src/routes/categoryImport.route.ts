@@ -1,8 +1,8 @@
 import express from "express";
-import { importData } from "../controllers/categoryImport.controller.js";
+import categoryImportController from "../controllers/categoryImport.controller.js";
 
 const router = express.Router();
 
-router.route("/").post(importData);
+router.route("/").post(categoryImportController.importData);
 
 export default router;

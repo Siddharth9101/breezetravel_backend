@@ -28,3 +28,10 @@ export interface IHotel extends Schema {
 export interface ICategory extends Schema {
   category: string;
 }
+
+export interface IUser extends Schema {
+  username: string;
+  email: string;
+  password: string;
+  number: string;
+}

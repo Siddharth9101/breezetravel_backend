@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import healthRoute from "./routes/health.route.js";
 import hotelsRoutes from "./routes/hotel.route.js";
 import routeToAddHotelsInDb from "./routes/hotelImport.route.js";
@@ -6,6 +8,7 @@ import categoriesRoutes from "./routes/category.route.js";
 import routeToAddCategoriesInDb from "./routes/categoryImport.route.js";
 import mongoose from "mongoose";
 import { connectDB } from "./configs/dbconfig.js";
+import authRoutes from "./routes/auth.route.js";
 
 const app = express();
 const PORT = 8000;
@@ -17,6 +20,7 @@ app.use("/api/add-hotels", routeToAddHotelsInDb);
 app.use("/api/hotels", hotelsRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/add-categories", routeToAddCategoriesInDb);
+app.use("/api/auth", authRoutes);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to Database!");

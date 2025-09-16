@@ -1,8 +1,8 @@
 import express from "express";
-import { importData } from "../controllers/hotelImport.controller.js";
+import importHotelsDataController from "../controllers/hotelImport.controller.js";
 
 const router = express.Router();
 
-router.route("/").post(importData);
+router.route("/").post(importHotelsDataController.importData);
 
 export default router;
