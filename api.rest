@@ -1,4 +1,4 @@
-GET http://localhost:8000/api/hotels?category=Tiny Homes
+GET http://localhost:8000/api/hotels
 Content-Type: application/json
 Accept: application/json
 
@@ -9,5 +9,10 @@ Accept: application/json
 
 ###
 POST http://localhost:8000/api/add-categories
+Content-Type: application/json
+Accept: application/json
+
+###
+GET http://localhost:8000/api/hotels/68c5249a785a4c0980e2adf4
 Content-Type: application/json
 Accept: application/json

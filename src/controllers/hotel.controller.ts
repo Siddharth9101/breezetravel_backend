@@ -6,7 +6,7 @@ import { apiResponse } from "../utils/ApiResponse.js";
 export const getHotels = async (req: Request, res: Response) => {
   try {
     const hotelsCategory = req.query?.category;
-    let hotelsInDb: IHotel[] = [];
+    let hotelsInDb = [];
     if (hotelsCategory) {
       hotelsInDb = await Hotel.find({ category: hotelsCategory });
     } else {
@@ -18,5 +18,20 @@ export const getHotels = async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     apiResponse(res, 500, "Failed to fetch hotels!", false);
+  }
+};
+
+export const getSingleHotel = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const hotel = await Hotel.findById(id);
+
+    hotel
+      ? apiResponse(res, 200, "Successfully fetched hotel!", true, hotel)
+      : apiResponse(res, 404, "No hotel found!", false);
+  } catch (error) {
+    console.error(error);
+    apiResponse(res, 500, "Failed to fetch hotel!", false);
   }
 };
