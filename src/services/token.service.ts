@@ -1,12 +1,10 @@
 import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import userService from "./user.service.js";
+import { JWTPayload } from "../types/index.js";
 
 class TokenService {
-  async generateAndStoreTokens(paylaod: {
-    id: Types.ObjectId;
-    username: string;
-  }) {
+  async generateAndStoreTokens(paylaod: JWTPayload) {
     const accessToken = jwt.sign(paylaod, process.env.ACCESS_TOKEN_SECRET!, {
       expiresIn: "1d",
     });
@@ -17,6 +15,11 @@ class TokenService {
     await userService.storeRefreshTokenInDb(paylaod.id, refreshToken);
 
     return { accessToken, refreshToken };
+  }
+
+  verifyAndDecodeToken(token: string): JWTPayload {
+    const userData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!);
+    return userData as JWTPayload;
   }
 }
 

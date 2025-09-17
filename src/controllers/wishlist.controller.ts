@@ -6,7 +6,7 @@ import wishlistService from "../services/wishlist.service.js";
 
 class WishlistController {
   async addHotel(req: Request, res: Response) {
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     let validatedData;
     try {
@@ -18,6 +18,15 @@ class WishlistController {
       }
       console.error(error);
       return apiResponse(res, 400, "Bad Request Body!", false);
+    }
+
+    try {
+      if (await wishlistService.checkHotelInDb(validatedData.hotelId)) {
+        return apiResponse(res, 400, "Hotel already in Wishlist!", false);
+      }
+    } catch (error) {
+      console.error(error);
+      return apiResponse(res, 500, "Failed to add hotel to Wishlist!", false);
     }
 
     try {
@@ -30,7 +39,7 @@ class WishlistController {
   }
 
   async removeHotel(req: Request, res: Response) {
-    const userId = req.userId;
+    const userId = req.user?.id;
 
     let validatedData;
     try {
@@ -42,6 +51,25 @@ class WishlistController {
       }
       console.error(error);
       return apiResponse(res, 400, "Bad Request Body!", false);
+    }
+
+    try {
+      if (!(await wishlistService.checkHotelInDb(validatedData.hotelId))) {
+        return apiResponse(
+          res,
+          400,
+          "Hotel does not exist in Wishlist!",
+          false
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      return apiResponse(
+        res,
+        500,
+        "Failed to remove hotel from Wishlist!",
+        false
+      );
     }
 
     try {

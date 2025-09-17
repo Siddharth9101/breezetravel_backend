@@ -15,14 +15,19 @@ class WishlistService {
   async removeHotel(data: z.infer<typeof wishlistSchema>) {
     await Wishlist.findOneAndUpdate(
       { userId: data.userId },
-      { $pop: { hotels: data.hotelId } }
+      { $pull: { hotels: data.hotelId } }
     );
     return;
   }
 
   async getWishlist(userId: string) {
     const wishlistInDb = await Wishlist.findOne({ userId }).populate("hotels");
-    return wishlistInDb;
+    return wishlistInDb === null ? [] : wishlistInDb.hotels;
+  }
+
+  async checkHotelInDb(hotelId: string): Promise<boolean> {
+    const wishlistInDb = await Wishlist.findOne({ hotels: hotelId });
+    return wishlistInDb !== null;
   }
 }
 

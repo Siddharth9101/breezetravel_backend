@@ -51,3 +51,8 @@ export interface IWishlist {
   userId: Types.ObjectId;
   hotels: Types.ObjectId[];
 }
+
+export interface JWTPayload {
+  id: Types.ObjectId;
+  username: string;
+}

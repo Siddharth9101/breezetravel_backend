@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 # Get Single Hotel
-GET http://localhost:8000/api/hotels/68c5249a785a4c0980e2adf4
+GET http://localhost:8000/api/hotels/68c8d706eb2149450b7e89c3
 Content-Type: application/json
 Accept: application/json
 
@@ -47,4 +47,30 @@ Accept: application/json
 {
     "username": "sidd",
     "password": "Qwerty@123"
+}
+
+###
+# Get Wishlist by UserId
+GET http://localhost:8000/api/wishlists/68ca6a9cb0046bf86b3e6bd5
+Content-Type: application/json
+Accept: application/json
+
+###
+# Add Hotel to Wishlist
+POST http://localhost:8000/api/wishlists/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "hotelId": "68c8d706eb2149450b7e89c3"
+}
+
+###
+# Remove Hotel from Wishlist
+DELETE  http://localhost:8000/api/wishlists/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "hotelId": "68c8d706eb2149450b7e89c3"
 }
