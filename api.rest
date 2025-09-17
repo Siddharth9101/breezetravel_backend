@@ -11,12 +11,12 @@ Accept: application/json
 
 ###
 # Import categories data
-POST http://localhost:8000/api/add-categories
+POST http://localhost:8000/api/categories/import-data
 Content-Type: application/json
 
 ###
 # Import hotels data
-POST http://localhost:8000/api/add-hotels
+POST http://localhost:8000/api/hotels/import-data
 Content-Type: application/json
 
 ###
