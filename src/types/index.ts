@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import { HydratedDocument } from "mongoose";
 
-export interface IHotel extends Schema {
+export interface IHotel {
   name: string;
   category: string;
   image: string;
@@ -25,13 +25,24 @@ export interface IHotel extends Schema {
   isCancelable: boolean;
 }
 
-export interface ICategory extends Schema {
+export interface ICategory {
   category: string;
 }
 
-export interface IUser extends Schema {
+export interface IUser {
   username: string;
   email: string;
   password: string;
   number: string;
+  refreshToken: string | null;
 }
+
+export interface IUserMethods {
+  checkPassword(oldPassword: string): Promise<boolean>;
+}
+
+export type UserDoc = HydratedDocument<IUser, IUserMethods>;
+
+export type CheckExistanceReturn<T extends boolean> = T extends true
+  ? { exists: boolean; user: UserDoc | null }
+  : { exists: boolean };

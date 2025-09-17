@@ -1,13 +1,16 @@
-import mongoose from "mongoose";
-import { IUser } from "../types/index.js";
+import mongoose, { Model } from "mongoose";
+import { IUser, IUserMethods } from "../types/index.js";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema<IUser>(
+type UserModel = Model<IUser, {}, IUserMethods>;
+
+const userSchema = new mongoose.Schema<IUser, UserModel>(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 6 },
     number: { type: String, required: true, unique: true },
+    refreshToken: { type: String, default: null },
   },
   {
     timestamps: true,
@@ -29,6 +32,6 @@ userSchema.methods.checkPassword = async function (
   return await bcrypt.compare(oldPassword, this.password);
 };
 
-const User = mongoose.model<IUser>("User", userSchema);
+const User = mongoose.model<IUser, UserModel>("User", userSchema);
 
 export default User;

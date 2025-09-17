@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
+import CookieParser from "cookie-parser";
+import cors from "cors";
 import healthRoute from "./routes/health.route.js";
 import hotelsRoutes from "./routes/hotel.route.js";
 import routeToAddHotelsInDb from "./routes/hotelImport.route.js";
@@ -13,8 +15,11 @@ import authRoutes from "./routes/auth.route.js";
 const app = express();
 const PORT = 8000;
 connectDB();
+const whitelist = ["http:localhost:5173"];
 
 app.use(express.json());
+app.use(CookieParser());
+app.use(cors({ origin: whitelist, credentials: true }));
 app.use("/api", healthRoute);
 app.use("/api/add-hotels", routeToAddHotelsInDb);
 app.use("/api/hotels", hotelsRoutes);
