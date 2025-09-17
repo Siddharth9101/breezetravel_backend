@@ -1,10 +1,10 @@
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 export interface IHotel {
   name: string;
   category: string;
   image: string;
-  imageArr: [string];
+  imageArr: string[];
   address: string;
   city: string;
   state: string;
@@ -18,9 +18,9 @@ export interface IHotel {
   numberOfStudies: number;
   hostName: string;
   hostJoinedOn: string;
-  ameneties: [string];
-  healthAndSafety: [string];
-  houseRules: [string];
+  ameneties: string[];
+  healthAndSafety: string[];
+  houseRules: string[];
   propertyType: string;
   isCancelable: boolean;
 }
@@ -46,3 +46,8 @@ export type UserDoc = HydratedDocument<IUser, IUserMethods>;
 export type CheckExistanceReturn<T extends boolean> = T extends true
   ? { exists: boolean; user: UserDoc | null }
   : { exists: boolean };
+
+export interface IWishlist {
+  userId: Types.ObjectId;
+  hotels: Types.ObjectId[];
+}

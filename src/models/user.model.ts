@@ -1,6 +1,7 @@
 import mongoose, { Model } from "mongoose";
 import { IUser, IUserMethods } from "../types/index.js";
 import bcrypt from "bcryptjs";
+import Wishlist from "./wishlist.model.js";
 
 type UserModel = Model<IUser, {}, IUserMethods>;
 
@@ -18,12 +19,11 @@ const userSchema = new mongoose.Schema<IUser, UserModel>(
   }
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
-  next();
 });
 
 userSchema.methods.checkPassword = async function (

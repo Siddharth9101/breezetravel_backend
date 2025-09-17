@@ -11,6 +11,7 @@ import routeToAddCategoriesInDb from "./routes/categoryImport.route.js";
 import mongoose from "mongoose";
 import { connectDB } from "./configs/dbconfig.js";
 import authRoutes from "./routes/auth.route.js";
+import wishlistRoutes from "./routes/wishlist.route.js";
 
 const app = express();
 const PORT = 8000;
@@ -26,6 +27,7 @@ app.use("/api/hotels", hotelsRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/add-categories", routeToAddCategoriesInDb);
 app.use("/api/auth", authRoutes);
+app.use("/api/wishlists", wishlistRoutes);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to Database!");

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { IHotel } from "../types/index.js";
 
 const hotelSchema = new mongoose.Schema<IHotel>(
@@ -32,6 +32,6 @@ const hotelSchema = new mongoose.Schema<IHotel>(
   }
 );
 
-const Hotel = mongoose.model<IHotel>("Hotel", hotelSchema);
+const Hotel = mongoose.model<IHotel, Model<IHotel>>("Hotel", hotelSchema);
 
 export { Hotel };
