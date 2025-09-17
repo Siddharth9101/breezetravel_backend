@@ -61,19 +61,16 @@ class AuthController {
       return apiResponse(res, 401, "Wrong password!", false);
     }
 
-    const { accessToken, refreshToken } = tokenService.generateTokens({
-      id: userInDb.user._id,
-      username: userInDb.user.username,
-    });
-
     try {
-      await userService.storeRefreshTokenInDb(userInDb.user._id, refreshToken);
+      const { accessToken, refreshToken } =
+        await tokenService.generateAndStoreTokens({
+          id: userInDb.user._id,
+          username: userInDb.user.username,
+        });
+      userService.setCookies(res, accessToken, refreshToken);
     } catch (error) {
       return apiResponse(res, 500, "Failed to login, try again later!", false);
     }
-
-    res.cookie("accessToken", accessToken);
-    res.cookie("refreshToken", refreshToken);
 
     return apiResponse(res, 200, "Logged in successfully!", true);
   }

@@ -1,26 +1,32 @@
+# Get all hotels
 GET http://localhost:8000/api/hotels
 Content-Type: application/json
 Accept: application/json
 
 ###
+# Get all categories
 GET http://localhost:8000/api/categories
 Content-Type: application/json
 Accept: application/json
 
 ###
+# Import categories data
 POST http://localhost:8000/api/add-categories
 Content-Type: application/json
 
 ###
+# Import hotels data
 POST http://localhost:8000/api/add-hotels
 Content-Type: application/json
 
 ###
+# Get Single Hotel
 GET http://localhost:8000/api/hotels/68c5249a785a4c0980e2adf4
 Content-Type: application/json
 Accept: application/json
 
 ###
+# Register User
 POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 Accept: application/json
@@ -30,4 +36,15 @@ Accept: application/json
     "email": "sidd@gmail.com",
     "password": "Qwerty@123",
     "number": "7906662840"
+}
+
+###
+# Login User
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "sidd",
+    "password": "Qwerty@123"
 }

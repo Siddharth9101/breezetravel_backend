@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import { registerSchema } from "../schemas/register.schema.js";
 import { CheckExistanceReturn } from "../types/index.js";
 import { Types } from "mongoose";
+import { CookieOptions, Response } from "express";
 
 class UserService {
   async checkExistance<T extends boolean>(
@@ -29,6 +30,18 @@ class UserService {
     await User.findByIdAndUpdate(id, {
       $set: { refreshToken },
     });
+    return;
+  }
+
+  setCookies(res: Response, accessToken: string, refreshToken: string) {
+    const options: CookieOptions = {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    };
+    res.cookie("accessToken", accessToken, options);
+    res.cookie("refreshToken", refreshToken, options);
     return;
   }
 }
