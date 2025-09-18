@@ -1,22 +1,28 @@
 import mongoose, { Model } from "mongoose";
 import { IWishlist } from "../types/index.js";
 
-const wishlistSchema = new mongoose.Schema<IWishlist>({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const wishlistSchema = new mongoose.Schema<IWishlist>(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    hotels: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Hotel",
+        },
+      ],
+      default: [],
+    },
   },
-  hotels: {
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Hotel",
-      },
-    ],
-    default: [],
-  },
-});
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
 
 const Wishlist = mongoose.model<IWishlist, Model<IWishlist>>(
   "Wishlist",

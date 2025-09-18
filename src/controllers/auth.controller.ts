@@ -74,6 +74,59 @@ class AuthController {
 
     return apiResponse(res, 200, "Logged in successfully!", true);
   }
+
+  async logout(req: Request, res: Response) {
+    const userId = req.user?.id;
+    if (!userId) {
+      return apiResponse(res, 400, "Login first!", false);
+    }
+    try {
+      await tokenService.removeTokenFromDb(userId);
+      userService.removeCookies(res);
+      return apiResponse(res, 200, "Logged out!", true);
+    } catch (error) {
+      console.error(error);
+      return apiResponse(res, 500, "Failed to logout!", false);
+    }
+  }
+
+  async refreshToken(req: Request, res: Response) {
+    const { refreshToken: refreshTokenFromCookie } = req.cookies;
+
+    if (!refreshTokenFromCookie) {
+      return apiResponse(res, 401, "Invalid Token!", false);
+    }
+
+    let userData;
+    try {
+      userData = tokenService.verifyAndDecodeToken(refreshTokenFromCookie);
+      if (!userData) {
+        throw new Error();
+      }
+    } catch (error) {
+      return apiResponse(res, 401, "Invalid Token!", false);
+    }
+
+    try {
+      const tokenExistsInDb = await tokenService.findUserWithRefreshToken(
+        userData.id,
+        refreshTokenFromCookie
+      );
+
+      if (!tokenExistsInDb) {
+        return apiResponse(res, 404, "User not found!", false);
+      }
+
+      const { accessToken, refreshToken } =
+        await tokenService.generateAndStoreTokens(userData);
+
+      userService.setCookies(res, accessToken, refreshToken);
+      return apiResponse(res, 200, "Token refreshed!", true);
+    } catch (error) {
+      console.error(error);
+      return apiResponse(res, 500, "Failed to refresh token!", false);
+    }
+  }
 }
 
 export default new AuthController();

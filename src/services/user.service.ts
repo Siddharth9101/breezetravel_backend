@@ -26,13 +26,6 @@ class UserService {
     return newUser._id;
   }
 
-  async storeRefreshTokenInDb(id: Types.ObjectId, refreshToken: string) {
-    await User.findByIdAndUpdate(id, {
-      $set: { refreshToken },
-    });
-    return;
-  }
-
   setCookies(res: Response, accessToken: string, refreshToken: string) {
     const options: CookieOptions = {
       httpOnly: true,
@@ -42,6 +35,12 @@ class UserService {
     };
     res.cookie("accessToken", accessToken, options);
     res.cookie("refreshToken", refreshToken, options);
+    return;
+  }
+
+  removeCookies(res: Response) {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
     return;
   }
 }
