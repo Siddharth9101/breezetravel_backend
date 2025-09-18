@@ -10,14 +10,12 @@ import mongoose from "mongoose";
 import { connectDB } from "./configs/dbconfig.js";
 import authRoutes from "./routes/auth.route.js";
 import wishlistRoutes from "./routes/wishlist.route.js";
-import job from "./configs/cron.js";
 import { apiResponse } from "./utils/ApiResponse.js";
 
 const app = express();
 const PORT = 8000;
 connectDB();
 const whitelist = ["http:localhost:5173"];
-if (process.env.NODE_ENV === "production") job.start();
 
 app.use(express.json());
 app.use(CookieParser());
