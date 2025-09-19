@@ -15,7 +15,7 @@ import { apiResponse } from "./utils/ApiResponse.js";
 const app = express();
 const PORT = 8000;
 connectDB();
-const whitelist = ["http:localhost:5173"];
+const whitelist = ["http://localhost:5173"];
 
 app.use(express.json());
 app.use(CookieParser());
